@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Dmitriy Kozlov](https://up.htmlacademy.ru/react/10/user/912453).
-* Наставник: `Неизвестно`.
+* Наставник: [Глеб Клецков](https://htmlacademy.ru/profile/id1487865).
 
 ---
 
