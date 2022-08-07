@@ -1,4 +1,5 @@
 export type Offer = {
+  id: string,
   image: string,
   premium: boolean,
   price: number,
@@ -12,6 +13,7 @@ export function getOffers(count = 1): Offer[] {
   const result: Offer[] = [];
   for (let i = 0; i < count; i++) {
     result.push({
+      id: String(new Date()),
       image: 'img/room.jpg',
       premium: false,
       price: 120,
@@ -22,4 +24,10 @@ export function getOffers(count = 1): Offer[] {
     });
   }
   return result;
+}
+
+export enum AccessType {
+  authorized = 'authorized',
+  unauthorized = 'unauthorized',
+  unknown = 'unknown'
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { getOffers } from './mocks/offers';
+import { getOffers } from './mocks/mocks';
 
 const DEFAULT_OFFERS_COUNT = 5;
 
