@@ -1,4 +1,4 @@
-import { AccessType, Offer } from '../../mocks/mocks';
+import { Offer } from '../../mocks/offers';
 import {
   BrowserRouter,
   Routes,
@@ -11,22 +11,22 @@ import { Login } from '../../pages/login/login';
 import { Room } from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import MainLayout from '../main-layout/main-layout';
+import { AccessType, Paths } from '../../const';
 
 type AppProps = {
   offers: Offer[],
 };
 
 function App({ offers }: AppProps): JSX.Element {
-  // return <MainPage offers={offers} />;
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainLayout login={'Oliver.conner@gmail.com'} />} >
+        <Route path={Paths.Root} element={<MainLayout login={'Oliver.conner@gmail.com'} />} >
           <Route index element={<MainPage offers={offers} />} />
-          <Route path='offer/:id' element={<Room />} />
+          <Route path='offer/:id' element={<Room offers={offers} />} />
           <Route path='favorites' element={
-            <PrivateRoute access={AccessType.unauthorized}>
-              <Favorites />
+            <PrivateRoute access={AccessType.authorized}>
+              <Favorites offers={offers} />
             </PrivateRoute>
           }
           />

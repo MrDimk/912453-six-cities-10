@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { getOffers } from './mocks/mocks';
-
-const DEFAULT_OFFERS_COUNT = 5;
+import { getOffers } from './mocks/offers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const mockOffers = getOffers(DEFAULT_OFFERS_COUNT);
+const mockOffers = getOffers();
 
 root.render(
   <React.StrictMode>
