@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { AccessType } from '../../mocks/mocks';
+import { AccessType } from '../../const';
 
 type PrivateRouteProps = {
   children: JSX.Element,

@@ -1,5 +1,5 @@
-import RoomsList from '../../components/rooms-list/rooms-list';
-import { Offer } from '../../mocks/mocks';
+import OffersList from '../../components/rooms-list/offers-list';
+import { Offer } from '../../mocks/offers';
 
 type MainProps = {
   offers: Offer[],
@@ -58,14 +58,14 @@ function MainPage({ offers }: MainProps): JSX.Element {
                   <use xlinkHref="#icon-arrow-select"></use>
                 </svg>
               </span>
-              <ul className="places__options places__options--custom places__options--opened">
+              <ul className="places__options places__options--custom">
                 <li className="places__option places__option--active" tabIndex={0}>Popular</li>
                 <li className="places__option" tabIndex={0}>Price: low to high</li>
                 <li className="places__option" tabIndex={0}>Price: high to low</li>
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <RoomsList offers={offers} />
+            <OffersList offers={offers} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
