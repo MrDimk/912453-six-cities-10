@@ -1,20 +1,22 @@
 import { useState } from 'react';
+import { ContainerType } from '../../const';
 import { Offer } from '../../mocks/offers';
 import OfferCard from '../offer-card/offer-card';
 
 type OffersListProps = {
   offers: Offer[],
+  container: ContainerType
 };
 
-function OffersList({ offers }: OffersListProps): JSX.Element {
+function OffersList({ offers, container }: OffersListProps): JSX.Element {
 
   const [, setActiveOffer] = useState({ id: '' });
 
   const offerCardHoverHandler = (offer: Offer): void => setActiveOffer({ id: offer.id });
 
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer: Offer) => <OfferCard offer={offer} key={offer.id} hoverHandler={offerCardHoverHandler} />)}
+    <div className={container.containerClassName}>
+      {offers.map((offer: Offer) => <OfferCard offer={offer} container={container} key={offer.id} hoverHandler={offerCardHoverHandler} />)}
     </div>
   );
 }

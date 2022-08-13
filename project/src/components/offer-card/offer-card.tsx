@@ -1,24 +1,23 @@
 import { Link } from 'react-router-dom';
+import { ContainerType } from '../../const';
 import { Offer } from '../../mocks/offers';
 import { ratingRate } from '../../utils';
+import { Mark } from '../mark/mark';
 
 type OfferCardProps = {
   offer: Offer,
+  container: ContainerType
   hoverHandler: (offer: Offer) => void,
 };
 
-function OfferCard({ offer, hoverHandler }: OfferCardProps): JSX.Element {
+function OfferCard({ offer, container, hoverHandler }: OfferCardProps): JSX.Element {
   const { id, price, mark, image, title, type, favorite, rating } = offer;
   const ratingStars = ratingRate(rating);
 
   return (
-    <article className="cities__card place-card" onMouseOver={() => hoverHandler(offer)}>
-      {mark ? (
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-      ) : null}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className={`${container.classNamePrefix}__card place-card`} onMouseOver={() => hoverHandler(offer)}>
+      {mark && <Mark text={mark} className="place-card__mark" />}
+      <div className={`${container.classNamePrefix}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={image} width="260" height="200" alt="Place" />
         </Link>

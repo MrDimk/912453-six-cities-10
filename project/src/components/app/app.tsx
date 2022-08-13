@@ -32,6 +32,7 @@ function App({ offers }: AppProps): JSX.Element {
           />
         </Route>
         <Route path='login' element={<Login />} />
+        <Route path='404' element={<Message404 />} />
         <Route path='*' element={<Message404 />} />
       </Routes>
     </BrowserRouter>
