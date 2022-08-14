@@ -1,4 +1,6 @@
+import { Map } from '../../components/map/map';
 import OffersList from '../../components/rooms-list/offers-list';
+import { ContainerTypes, Locations } from '../../const';
 import { Offer } from '../../mocks/offers';
 
 type MainProps = {
@@ -65,10 +67,12 @@ function MainPage({ offers }: MainProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <OffersList offers={offers} />
+            <OffersList offers={offers} container={ContainerTypes.Cities} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <section className="cities__map map">
+              <Map offers={offers} mapLocation={Locations.Amsterdam} />
+            </section>
           </div>
         </div>
       </div>
