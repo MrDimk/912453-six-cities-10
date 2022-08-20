@@ -1,7 +1,4 @@
-export type Coordinates = {
-  lat: number,
-  lng: number,
-}
+import { Coordinates } from '../const';
 
 export type Offer = {
   id: string,
@@ -215,6 +212,42 @@ const mockOffers: Offer[] = [
     coordinates: {
       lat: 52.3809553943508,
       lng: 4.939309666406198,
+    },
+    host: {
+      name: 'Sofia',
+      avatar: 'img/avatar-angelina.jpg',
+      proStatus: false,
+    },
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+
+    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.`,
+    reviews: ['comment-1', 'comment-3', 'comment-4'],
+  },
+  {
+    id: 'id-5',
+    image: 'img/apartment-01.jpg',
+    mark: '',
+    price: 150,
+    title: 'Nice, cozy, warm big bed apartment',
+    type: 'Apartment',
+    favorite: false,
+    rating: 3.5,
+    location: 'Paris',
+    images: [
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-01.jpg',
+      'img/apartment-01.jpg',
+    ],
+    bedrooms: 2,
+    maxAdults: 3,
+    insideFeatures: ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine',
+      'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge',],
+    coordinates: {
+      lat: 48.8577,
+      lng: 2.3456,
     },
     host: {
       name: 'Sofia',

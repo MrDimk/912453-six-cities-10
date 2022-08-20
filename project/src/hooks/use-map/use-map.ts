@@ -1,21 +1,21 @@
 import { MutableRefObject, useEffect, useState } from 'react';
-import { Coordinates } from '../../mocks/offers';
 import { Map, TileLayer, MapOptions, LayerOptions } from 'leaflet';
-import { DEFAULT_ZOOM } from '../../const';
+import { City } from '../../const';
 
 export function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  coordinates: Coordinates
+  currentCity: City
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
     const element = mapRef.current;
     const hasChildren = element ? element.hasChildNodes() : false;
+    const { location, zoom } = currentCity;
 
     const mapOptions: MapOptions = {
-      center: coordinates,
-      zoom: DEFAULT_ZOOM
+      center: location,
+      zoom: zoom
     };
 
     const templateUrlLayer = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
@@ -30,8 +30,11 @@ export function useMap(
       instanceMap.addLayer(layer);
 
       setMap(instanceMap);
+    } else {
+      map && map.setView(location, zoom);
     }
-  }, [map, mapRef, coordinates]);
+
+  }, [map, mapRef, currentCity]);
 
   return map;
 }
