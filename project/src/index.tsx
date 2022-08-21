@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { getOffers } from './mocks/offers';
+import { store } from './store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const mockOffers = getOffers();
-
 root.render(
   <React.StrictMode>
-    <App offers={mockOffers} />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
 );

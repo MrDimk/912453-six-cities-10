@@ -5,7 +5,8 @@ import { Map } from '../../components/map/map';
 import { Mark } from '../../components/mark/mark';
 import { ReviewsList } from '../../components/reviews/reviews-list';
 import OffersList from '../../components/rooms-list/offers-list';
-import { ContainerTypes, Locations } from '../../const';
+import { City, ContainerTypes } from '../../const';
+import { useAppSelector } from '../../hooks';
 import { mockReviews, Offer } from '../../mocks/offers';
 import { ratingRate } from '../../utils';
 
@@ -15,8 +16,12 @@ type RoomProps = {
 
 export function Room({ offers }: RoomProps): JSX.Element {
   const { id } = useParams();
+  const currentCity: City = useAppSelector((state) => state.currentCity);
   const offerData = offers.find((offer) => offer.id === id);
-  const similarOffers = offers.filter((offer) => offer.id !== id);
+  const similarOffers = offers
+    .filter((offer) => offer.location === currentCity.name)
+    .filter((offer) => offer.id !== id)
+    .slice(0, 3);
   if (!offerData) {
     return <Navigate to="/404" />;
   }
@@ -93,12 +98,13 @@ export function Room({ offers }: RoomProps): JSX.Element {
           </div>
         </div>
         <section className="property__map map">
-          <Map offers={similarOffers} mapLocation={Locations.Amsterdam} />
+          <Map offers={similarOffers} currentCity={currentCity} />
         </section>
       </section>
       <div className="container">
         <section className="near-places places">
           {similarOffers && <h2 className="near-places__title">Other places in the neighbourhood</h2>}
+          {/* <OffersList offers={similarOffers} container={ContainerTypes.NearPlaces} /> */}
           <OffersList offers={similarOffers} container={ContainerTypes.NearPlaces} />
         </section>
       </div>

@@ -3,6 +3,7 @@ import { ContainerType } from '../../const';
 import { Offer } from '../../mocks/offers';
 import OfferCard from '../offer-card/offer-card';
 
+
 type OffersListProps = {
   offers: Offer[],
   container: ContainerType

@@ -1,4 +1,3 @@
-import { Offer } from '../../mocks/offers';
 import {
   BrowserRouter,
   Routes,
@@ -12,12 +11,11 @@ import { Room } from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import MainLayout from '../main-layout/main-layout';
 import { AccessType, Paths } from '../../const';
+import { useAppSelector } from '../../hooks';
 
-type AppProps = {
-  offers: Offer[],
-};
+function App(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
 
-function App({ offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
