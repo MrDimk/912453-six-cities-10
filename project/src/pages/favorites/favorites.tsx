@@ -1,13 +1,13 @@
 import { FavoriteLocationItem } from '../../components/favorites-location-item/favorites-location-item';
-import { Offer } from '../../mocks/offers';
+import { Offers } from '../../types/types';
 
 type FavoritesProps = {
-  offers: Offer[],
+  offers: Offers,
 }
 
 export function Favorites({ offers }: FavoritesProps): JSX.Element {
-  const favoriteOffers = offers.filter((offer) => offer.favorite);
-  const locations = Array.from(new Set(favoriteOffers.map((offer) => offer.location)));
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const citiesWithOffers = Array.from(new Set(favoriteOffers.map((offer) => offer.city.name)));
 
   return (
     <>
@@ -16,8 +16,8 @@ export function Favorites({ offers }: FavoritesProps): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {locations.map((location: string) => (
-                <FavoriteLocationItem offers={favoriteOffers} location={location} key={location} />
+              {citiesWithOffers.map((city: string) => (
+                <FavoriteLocationItem offers={favoriteOffers} city={city} key={city} />
               ))}
             </ul>
           </section>

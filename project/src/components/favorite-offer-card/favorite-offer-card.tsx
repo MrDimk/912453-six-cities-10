@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Offer } from '../../mocks/offers';
+import { Offer } from '../../types/types';
 import { ratingRate } from '../../utils';
 import { Mark } from '../mark/mark';
 
@@ -8,14 +8,14 @@ type FavoriteOfferCardProps = {
 };
 
 export function FavoriteOfferCard({ offer }: FavoriteOfferCardProps): JSX.Element {
-  const { id, mark, title, rating, price, type, image } = offer;
+  const { id, isPremium, title, rating, price, type, previewImage } = offer;
 
   return (
     <article className="favorites__card place-card">
-      {mark && <Mark text={mark} className="place-card__mark" />}
+      {isPremium && <Mark text="Premium" className="place-card__mark" />}
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={image} width="150" height="110" alt="Place" />
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place" />
         </Link>
       </div>
       <div className="favorites__card-info place-card__info">

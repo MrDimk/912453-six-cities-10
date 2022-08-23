@@ -3,31 +3,31 @@ import { ImageGallery } from '../../components/image-gallery/image-gallery';
 import { InsideFeaturesList } from '../../components/inside-features-list/inside-features-list';
 import { Map } from '../../components/map/map';
 import { Mark } from '../../components/mark/mark';
-import { ReviewsList } from '../../components/reviews/reviews-list';
+// import { ReviewsList } from '../../components/reviews/reviews-list';
 import OffersList from '../../components/rooms-list/offers-list';
 import { City, ContainerTypes } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { mockReviews, Offer } from '../../mocks/offers';
+// import { mockReviews } from '../../mocks/offers';
+import { Offers } from '../../types/types';
 import { ratingRate } from '../../utils';
 
 type RoomProps = {
-  offers: Offer[],
+  offers: Offers,
 }
 
 export function Room({ offers }: RoomProps): JSX.Element {
   const { id } = useParams();
   const currentCity: City = useAppSelector((state) => state.currentCity);
-  const offerData = offers.find((offer) => offer.id === id);
+  const offerData = offers.find((offer) => `${offer.id}` === id);
   const similarOffers = offers
-    .filter((offer) => offer.location === currentCity.name)
-    .filter((offer) => offer.id !== id)
+    .filter((offer) => offer.city.name === currentCity.name && `${offer.id}` !== id)
     .slice(0, 3);
   if (!offerData) {
     return <Navigate to="/404" />;
   }
-  const { mark, title, rating, type, price, bedrooms, maxAdults, insideFeatures } = offerData;
+  const { isPremium, title, rating, type, price, bedrooms, maxAdults, goods } = offerData;
   const ratingStars = ratingRate(rating);
-  const relevantReviews = mockReviews.filter((review) => offerData.reviews.some((item) => item === review.id));
+  // const relevantReviews = mockReviews.filter((review) => offerData.reviews.some((item) => item === review.id));
 
   return (
     <>
@@ -37,7 +37,7 @@ export function Room({ offers }: RoomProps): JSX.Element {
         </div>
         <div className="property__container container">
           <div className="property__wrapper">
-            {mark && <Mark text={mark} className="property__mark" />}
+            {isPremium && <Mark text="Premium" className="property__mark" />}
             <div className="property__name-wrapper">
               <h1 className="property__name">
                 {title}
@@ -73,19 +73,19 @@ export function Room({ offers }: RoomProps): JSX.Element {
             </div>
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
-              <InsideFeaturesList insideFeatures={insideFeatures} />
+              <InsideFeaturesList insideFeatures={goods} />
             </div>
             <div className="property__host">
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
-                <div className={offerData.host.proStatus ? 'property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper' : 'property__avatar-wrapper user__avatar-wrapper'}>
-                  <img className="property__avatar user__avatar" src={offerData.host.avatar} width="74" height="74" alt="Host avatar" />
+                <div className={offerData.host.isPro ? 'property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper' : 'property__avatar-wrapper user__avatar-wrapper'}>
+                  <img className="property__avatar user__avatar" src={offerData.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
                 <span className="property__user-name">
                   {offerData.host.name}
                 </span>
                 <span className="property__user-status">
-                  {offerData.host.proStatus && 'Pro'}
+                  {offerData.host.isPro && 'Pro'}
                 </span>
               </div>
               <div className="property__description">
@@ -94,7 +94,7 @@ export function Room({ offers }: RoomProps): JSX.Element {
                 </p>
               </div>
             </div>
-            <ReviewsList reviews={relevantReviews} offerId={`${id}`} />
+            {/* <ReviewsList reviews={relevantReviews} offerId={`${id}`} /> */}
           </div>
         </div>
         <section className="property__map map">

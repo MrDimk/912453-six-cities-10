@@ -20,8 +20,6 @@ export enum Ratings {
   fiveStars = 5
 }
 
-export const DEFAULT_ZOOM = 11;
-
 export type ContainerType = {
   containerClassName: string,
   classNamePrefix: string
@@ -49,55 +47,62 @@ export type City = {
   zoom: number,
 }
 
-
 export const CITIES: City[] = [
   {
     name: 'Paris',
     location: {
-      lat: 48.8577,
-      lng: 2.3456,
+      lat: 48.85661,
+      lng: 2.351499,
     },
-    zoom: 11
+    zoom: 13
 
   },
   {
     name: 'Cologne',
     location: {
-      lat: 43.72213,
-      lng: 0.97747,
+      lat: 50.938361,
+      lng: 6.959974,
     },
-    zoom: 16
+    zoom: 13
   },
   {
     name: 'Brussels',
     location: {
-      lat: 62.3909553943508,
-      lng: 4.85309666406198,
+      lat: 50.846557,
+      lng: 4.351697,
     },
-    zoom: 10
+    zoom: 13
   },
   {
     name: 'Amsterdam',
     location: {
-      lat: 52.3909553943508,
-      lng: 4.85309666406198,
+      lat: 52.37454,
+      lng: 4.897976,
     },
-    zoom: 11
+    zoom: 13
   },
   {
     name: 'Hamburg',
     location: {
-      lat: 72.3909553943508,
-      lng: 4.85309666406198,
+      lat: 53.550341,
+      lng: 10.000654,
     },
-    zoom: 10
+    zoom: 13
   },
   {
     name: 'Dusseldorf',
     location: {
-      lat: 82.3909553943508,
-      lng: 4.85309666406198,
+      lat: 51.225402,
+      lng: 6.776314,
     },
-    zoom: 10
+    zoom: 13
   },
 ];
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}

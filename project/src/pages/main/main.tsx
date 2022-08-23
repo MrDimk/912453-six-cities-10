@@ -2,17 +2,17 @@ import { CitiesList } from '../../components/app/cities/cities-list';
 import { Map } from '../../components/map/map';
 import OffersList from '../../components/rooms-list/offers-list';
 import { CITIES, City, ContainerTypes } from '../../const';
-import { Offer } from '../../mocks/offers';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { changeCity } from '../../store/action';
+import { Offers } from '../../types/types';
 
 type MainProps = {
-  offers: Offer[],
+  offers: Offers,
 };
 
 function MainPage({ offers }: MainProps): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
-  const relevantOffers = offers.filter((offer) => offer.location === currentCity.name);
+  const relevantOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const offersCount = relevantOffers.length;
   const dispatch = useAppDispatch();
 

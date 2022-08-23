@@ -1,14 +1,13 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Paths } from '../../const';
+import { Outlet, useLocation } from 'react-router-dom';
+import { AccessType, Paths } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { SignIn } from '../login/sign-in';
+import { SignOut } from '../login/sign-out';
 import Logo from '../logo/logo';
 
-type MainLayoutProps = {
-  login: string
-};
-
-function MainLayout({ login }: MainLayoutProps) {
+function MainLayout() {
   const location = useLocation();
-  // console.log(location);
+  const { authorizationStatus } = useAppSelector((state) => state);
 
   return (
     <div className={location.pathname === Paths.Root ? 'page page--gray page--main' : 'page'}>
@@ -18,7 +17,8 @@ function MainLayout({ login }: MainLayoutProps) {
             <div className="header__left">
               <Logo />
             </div>
-            <nav className="header__nav">
+            {authorizationStatus === AccessType.authorized ? <SignOut /> : <SignIn />}
+            {/* <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <Link className="header__nav-link header__nav-link--profile" to={Paths.Favorites}>
@@ -34,7 +34,7 @@ function MainLayout({ login }: MainLayoutProps) {
                   </Link>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
           </div>
         </div>
       </header>
