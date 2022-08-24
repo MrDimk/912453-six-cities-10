@@ -10,20 +10,22 @@ import { Login } from '../../pages/login/login';
 import { Room } from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import MainLayout from '../main-layout/main-layout';
-import { AccessType, Paths } from '../../const';
+import { Paths } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { Spinner } from '../../pages/main/spinner';
 
-function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+export function App(): JSX.Element {
+  const { offers, authorizationStatus, isLoading } = useAppSelector((state) => state);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={Paths.Root} element={<MainLayout login={'Oliver.conner@gmail.com'} />} >
-          <Route index element={<MainPage offers={offers} />} />
+        <Route path={Paths.Root} element={<MainLayout />} >
+          {isLoading && <Route index element={<Spinner />} />}
+          {!isLoading && <Route index element={<MainPage offers={offers} />} />}
           <Route path='offer/:id' element={<Room offers={offers} />} />
           <Route path='favorites' element={
-            <PrivateRoute access={AccessType.authorized}>
+            <PrivateRoute access={authorizationStatus}>
               <Favorites offers={offers} />
             </PrivateRoute>
           }
@@ -36,5 +38,3 @@ function App(): JSX.Element {
     </BrowserRouter>
   );
 }
-
-export default App;

@@ -1,5 +1,3 @@
-import { getNewId } from '../../mocks/offers';
-
 type InsideFeaturesListProps = {
   insideFeatures: string[],
 };
@@ -8,7 +6,7 @@ export function InsideFeaturesList({ insideFeatures }: InsideFeaturesListProps):
   return (
     <ul className="property__inside-list">
       {insideFeatures.map((item) => (
-        <li className="property__inside-item" key={getNewId()}>
+        <li className="property__inside-item" key={item}>
           {item}
         </li>
       ))}

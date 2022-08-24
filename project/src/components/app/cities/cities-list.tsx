@@ -19,7 +19,7 @@ export function CitiesList({ currentCity, cityClickHandler }: CitiesListProps): 
         cities.map((city) => (
           <li className="locations__item" key={city}>
             <NavLink
-              className={currentCity === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}
+              className={`locations__item-link tabs__item${currentCity === city ? ' tabs__item--active' : ''}`}
               to={Paths.Root}
               onClick={() => cityClickHandler(city)}
             >

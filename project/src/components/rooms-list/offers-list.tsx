@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { ContainerType } from '../../const';
-import { Offer } from '../../mocks/offers';
+import { Offer, Offers } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 
 
 type OffersListProps = {
-  offers: Offer[],
+  offers: Offers,
   container: ContainerType
 };
 
 function OffersList({ offers, container }: OffersListProps): JSX.Element {
 
-  const [, setActiveOffer] = useState({ id: '' });
+  const [, setActiveOffer] = useState({ id: -1 });
 
   const offerCardHoverHandler = (offer: Offer): void => setActiveOffer({ id: offer.id });
 
