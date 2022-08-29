@@ -1,12 +1,24 @@
 import { FavoriteLocationItem } from '../../components/favorites-location-item/favorites-location-item';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchFavoriteOffers } from '../../services/api-actions';
 import { Offers } from '../../types/types';
+import { Spinner } from '../main/spinner';
 
 type FavoritesProps = {
   offers: Offers,
 }
 
 export function Favorites({ offers }: FavoritesProps): JSX.Element {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
+  const dispatch = useAppDispatch();
+  dispatch(fetchFavoriteOffers);
+
+  const { isLoading, favoriteOffers } = useAppSelector((state) => state);
+
+  if (isLoading || !favoriteOffers) {
+    return <Spinner />;
+  }
+  // const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const citiesWithOffers = Array.from(new Set(favoriteOffers.map((offer) => offer.city.name)));
 
   return (
