@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FavoriteLocationItem } from '../../components/favorites-location-item/favorites-location-item';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteOffers } from '../../services/api-actions';
@@ -11,7 +12,10 @@ type FavoritesProps = {
 export function Favorites({ offers }: FavoritesProps): JSX.Element {
 
   const dispatch = useAppDispatch();
-  dispatch(fetchFavoriteOffers);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
 
   const { isLoading, favoriteOffers } = useAppSelector((state) => state);
 
