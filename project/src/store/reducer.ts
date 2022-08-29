@@ -1,13 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AccessType, CITIES, City } from '../const';
-import { Offers } from '../types/types';
-import { changeCity, changeUserData, loadOffers, requireAuthorization, setLoadingStatus } from './action';
+import { Offer, Offers, Reviews } from '../types/types';
+import { changeCity, changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setLoadingStatus } from './action';
 
 const DEFAULT_MAP_SETTINGS: City = CITIES[0];
 
 type AppState = {
   currentCity: City,
   offers: Offers,
+  currentOffer: Offer | null,
+  currentOfferReviews: Reviews | null,
+  currentNearbyOffers: Offers | null,
+  favoriteOffers: Offers | [] | null,
   cities: City[],
   isLoading: boolean,
   authorizationStatus: AccessType,
@@ -21,6 +25,10 @@ type AppState = {
 const initialState: AppState = {
   currentCity: DEFAULT_MAP_SETTINGS,
   offers: [],
+  currentOffer: null,
+  currentOfferReviews: null,
+  currentNearbyOffers: null,
+  favoriteOffers: null,
   cities: CITIES,
   isLoading: false,
   authorizationStatus: AccessType.unknown,
@@ -37,6 +45,18 @@ export const reducer = createReducer(initialState, (builder) => {
   })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(loadOffer, (state, action) => {
+      state.currentOffer = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.currentOfferReviews = action.payload;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.currentNearbyOffers = action.payload;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
     })
     .addCase(setLoadingStatus, (state, action) => {
       state.isLoading = action.payload;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { ContainerType } from '../../const';
 import { Offer, Offers } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
@@ -6,18 +6,23 @@ import OfferCard from '../offer-card/offer-card';
 
 type OffersListProps = {
   offers: Offers,
-  container: ContainerType
+  container: ContainerType,
+  setActiveOffer: (offer: Offer | null) => void
 };
 
-function OffersList({ offers, container }: OffersListProps): JSX.Element {
+function OffersList({ offers, container, setActiveOffer }: OffersListProps): JSX.Element {
 
-  const [, setActiveOffer] = useState({ id: -1 });
-
-  const offerCardHoverHandler = (offer: Offer): void => setActiveOffer({ id: offer.id });
+  const offerCardHoverHandler = (offer: Offer | null): void => setActiveOffer(offer);
 
   return (
     <div className={container.containerClassName}>
-      {offers.map((offer: Offer) => <OfferCard offer={offer} container={container} key={offer.id} hoverHandler={offerCardHoverHandler} />)}
+      {offers.map((offer: Offer) => (
+        <OfferCard
+          offer={offer}
+          container={container}
+          key={offer.id}
+          hoverHandler={offerCardHoverHandler}
+        />))}
     </div>
   );
 }

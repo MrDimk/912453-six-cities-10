@@ -6,6 +6,8 @@ import { logoutAction } from '../../services/api-actions';
 
 export function SignOut(): JSX.Element {
   const { email, avatarURL } = useAppSelector((state) => state.user);
+  const favoriteOffersCount = useAppSelector((state) => state.favoriteOffers?.length);
+
   const dispatch = useAppDispatch();
 
   const clickHandler = (evt: MouseEvent<HTMLAnchorElement>): void => {
@@ -23,7 +25,7 @@ export function SignOut(): JSX.Element {
             </div>
             <span className="header__user-name user__name">{email}</span>
 
-            {email && <span className="header__favorite-count">3</span>} {/* нужно сделать загрузку список избранных сразу по факту авторизации */}
+            {email && <span className="header__favorite-count">{favoriteOffersCount}</span>} {/* нужно сделать загрузку список избранных сразу по факту авторизации */}
 
           </NavLink>
         </li>

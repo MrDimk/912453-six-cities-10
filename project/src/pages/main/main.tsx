@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { CitiesList } from '../../components/app/cities/cities-list';
-import { Map } from '../../components/map/map';
+import { OffersMap } from '../../components/map/offers-map';
 import OffersList from '../../components/rooms-list/offers-list';
-import { CITIES, City, ContainerTypes } from '../../const';
+import { SortForm } from '../../components/sort/sort';
+import { CITIES, City, ContainerTypes, SortTypes } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { changeCity } from '../../store/action';
-import { Offers } from '../../types/types';
+import { Offer, Offers } from '../../types/types';
 
 type MainProps = {
   offers: Offers,
 };
+
+const DEFAULT_SORT = SortTypes[0];
 
 function MainPage({ offers }: MainProps): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
@@ -20,6 +24,11 @@ function MainPage({ offers }: MainProps): JSX.Element {
     const chosenCity = CITIES.find((city: City): boolean => city.name === cityName) || currentCity;
     dispatch(changeCity({ city: chosenCity }));
   };
+
+  const [currentSort, setSort] = useState(DEFAULT_SORT);
+  const sortedOffers = currentSort.compare ? relevantOffers.slice().sort(currentSort.compare) : relevantOffers;
+
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
 
   return (
     <>
@@ -34,26 +43,12 @@ function MainPage({ offers }: MainProps): JSX.Element {
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{offersCount} {offersCount > 1 ? 'places' : 'place'} to stay in {currentCity.name}</b>
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
-              <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select"></use>
-                </svg>
-              </span>
-              <ul className="places__options places__options--custom">
-                <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                <li className="places__option" tabIndex={0}>Price: low to high</li>
-                <li className="places__option" tabIndex={0}>Price: high to low</li>
-                <li className="places__option" tabIndex={0}>Top rated first</li>
-              </ul>
-            </form>
-            <OffersList offers={relevantOffers} container={ContainerTypes.Cities} />
+            <SortForm currentSort={currentSort} setSort={setSort} />
+            <OffersList offers={sortedOffers} container={ContainerTypes.Cities} setActiveOffer={setActiveOffer} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map offers={relevantOffers} currentCity={currentCity} />
+              <OffersMap offers={sortedOffers} currentCity={currentCity} activeOffer={activeOffer} />
             </section>
           </div>
         </div>

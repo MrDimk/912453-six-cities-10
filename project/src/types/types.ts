@@ -51,3 +51,15 @@ export type AuthData = {
 };
 
 export type Offers = Offer[] | [];
+
+export type User = Host;
+
+export type Review = {
+  comment: string
+  date: string
+  id: number
+  rating: number
+  user: User
+};
+
+export type Reviews = Review[] | [];
