@@ -1,33 +1,53 @@
+import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { ImageGallery } from '../../components/image-gallery/image-gallery';
 import { InsideFeaturesList } from '../../components/inside-features-list/inside-features-list';
-import { Map } from '../../components/map/map';
+import { OffersMap } from '../../components/map/offers-map';
 import { Mark } from '../../components/mark/mark';
-// import { ReviewsList } from '../../components/reviews/reviews-list';
+import { ReviewsList } from '../../components/reviews/reviews-list';
 import OffersList from '../../components/rooms-list/offers-list';
-import { City, ContainerTypes } from '../../const';
-import { useAppSelector } from '../../hooks';
-// import { mockReviews } from '../../mocks/offers';
-import { Offers } from '../../types/types';
+import { ContainerTypes } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchNearbyOffers, fetchOfferAction, fetchReviewsAction } from '../../services/api-actions';
+import { Offer, Offers } from '../../types/types';
 import { ratingRate } from '../../utils';
+import { Spinner } from '../main/spinner';
 
 type RoomProps = {
   offers: Offers,
 }
 
 export function Room({ offers }: RoomProps): JSX.Element {
+
   const { id } = useParams();
-  const currentCity: City = useAppSelector((state) => state.currentCity);
-  const offerData = offers.find((offer) => `${offer.id}` === id);
-  const similarOffers = offers
-    .filter((offer) => offer.city.name === currentCity.name && `${offer.id}` !== id)
-    .slice(0, 3);
+
+  const dispatch = useAppDispatch();
+  const currentCity = useAppSelector((state) => state.currentCity);
+  const offerData = useAppSelector((state) => state.currentOffer);
+  const isLoading = useAppSelector((state) => state.isLoading);
+  const relevantReviews = useAppSelector((state) => state.currentOfferReviews);
+  const nearbyOffers = useAppSelector((state) => state.currentNearbyOffers);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOfferAction(id));
+      dispatch(fetchReviewsAction(id));
+      dispatch(fetchNearbyOffers(id));
+    }
+  }, [dispatch, id]);
+
+
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null); // выделенный из числа подобных объявлений
+
+  if (isLoading || !offerData || !relevantReviews || !nearbyOffers) {
+    return (<Spinner />);
+  }
+
   if (!offerData) {
     return <Navigate to="/404" />;
   }
   const { isPremium, title, rating, type, price, bedrooms, maxAdults, goods } = offerData;
   const ratingStars = ratingRate(rating);
-  // const relevantReviews = mockReviews.filter((review) => offerData.reviews.some((item) => item === review.id));
 
   return (
     <>
@@ -94,18 +114,17 @@ export function Room({ offers }: RoomProps): JSX.Element {
                 </p>
               </div>
             </div>
-            {/* <ReviewsList reviews={relevantReviews} offerId={`${id}`} /> */}
+            <ReviewsList reviews={relevantReviews} offerId={`${id}`} />
           </div>
         </div>
         <section className="property__map map">
-          <Map offers={similarOffers} currentCity={currentCity} />
+          <OffersMap offers={nearbyOffers} currentCity={currentCity} activeOffer={activeOffer} />
         </section>
       </section>
       <div className="container">
         <section className="near-places places">
-          {similarOffers && <h2 className="near-places__title">Other places in the neighbourhood</h2>}
-          {/* <OffersList offers={similarOffers} container={ContainerTypes.NearPlaces} /> */}
-          <OffersList offers={similarOffers} container={ContainerTypes.NearPlaces} />
+          {nearbyOffers && <h2 className="near-places__title">Other places in the neighbourhood</h2>}
+          <OffersList offers={nearbyOffers} container={ContainerTypes.NearPlaces} setActiveOffer={setActiveOffer} />
         </section>
       </div>
     </>

@@ -1,3 +1,5 @@
+import { Offer } from './types/types';
+
 export enum AccessType {
   authorized = 'authorized',
   unauthorized = 'unauthorized',
@@ -6,7 +8,7 @@ export enum AccessType {
 
 export enum Paths {
   Root = '/',
-  Offer = '/offer',
+  Room = '/offer',
   Favorites = '/favorites',
   Login = '/login',
 }
@@ -106,3 +108,33 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export type SortType = {
+  id: number,
+  text: string,
+  compare: ((a: Offer, b: Offer) => number) | null,
+}
+
+export const SortTypes: SortType[] = [
+  {
+    id: 0,
+    text: 'Popular',
+    compare: null
+  },
+  {
+    id: 1,
+    text: 'Price: low to high',
+    compare: (a, b) => (a.price - b.price),
+  },
+  {
+    id: 2,
+    text: 'Price: high to lo',
+
+    compare: (a, b) => (b.price - a.price),
+  },
+  {
+    id: 3,
+    text: 'Top rated first',
+    compare: (a, b) => (b.rating - a.rating),
+  }
+];

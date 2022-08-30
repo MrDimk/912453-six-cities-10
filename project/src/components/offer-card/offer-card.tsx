@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { ContainerType } from '../../const';
+import { MouseEvent, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ContainerType, Paths } from '../../const';
 import { Offer } from '../../types/types';
 import { ratingRate } from '../../utils';
 import { Mark } from '../mark/mark';
@@ -7,20 +8,37 @@ import { Mark } from '../mark/mark';
 type OfferCardProps = {
   offer: Offer,
   container: ContainerType
-  hoverHandler: (offer: Offer) => void,
+  hoverHandler: (offer: Offer | null) => void
 };
 
 function OfferCard({ offer, container, hoverHandler }: OfferCardProps): JSX.Element {
   const { id, price, isPremium, previewImage, title, type, isFavorite, rating } = offer;
   const ratingStars = ratingRate(rating);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const clickOnCardHandler = (evt: MouseEvent) => {
+    evt.preventDefault();
+    if (hoverHandler) {
+      hoverHandler(null);
+    }
+    navigate(`${Paths.Room}/${id}`);
+  };
 
   return (
-    <article className={`${container.classNamePrefix}__card place-card`} onMouseOver={() => hoverHandler(offer)}>
+    <article
+      className={`${container.classNamePrefix}__card place-card`}
+      onMouseOver={() => hoverHandler ? hoverHandler(offer) : ''}
+      onMouseOut={() => hoverHandler ? hoverHandler(null) : ''}
+    >
       {isPremium && <Mark text="Premium" className="place-card__mark" />}
       <div className={`${container.classNamePrefix}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`/offer/${id}`}>
+        <a onClick={clickOnCardHandler} href="/">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
-        </Link>
+        </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

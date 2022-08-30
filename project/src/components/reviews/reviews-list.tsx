@@ -1,13 +1,17 @@
-import { Review } from '../../mocks/offers';
+import { AccessType } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { Reviews } from '../../types/types';
 import { NewCommentForm } from '../new-comment-form/new-comment-form';
 import { ReviewItem } from './review-item';
 
 type ReviewsListProps = {
-  reviews: Review[],
+  reviews: Reviews,
   offerId: string,
 };
 
 export function ReviewsList({ reviews, offerId }: ReviewsListProps): JSX.Element {
+  const { authorizationStatus } = useAppSelector((state) => state);
+
   const reviewsCount = reviews.length;
   return (
     <section className="property__reviews reviews">
@@ -15,7 +19,7 @@ export function ReviewsList({ reviews, offerId }: ReviewsListProps): JSX.Element
       <ul className="reviews__list">
         {reviews.map((item) => <ReviewItem review={item} key={item.id} />)}
       </ul>
-      <NewCommentForm offerId={`${offerId}`} />
+      {authorizationStatus === AccessType.authorized ? <NewCommentForm offerId={`${offerId}`} /> : ''}
     </section>
   );
 }
