@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AccessType, CITIES, City } from '../const';
 import { Offer, Offers, Reviews } from '../types/types';
-import { changeCity, changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setLoadingStatus, toggleFavoriteOffer } from './action';
+import { changeCity, changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, postNewReview, requireAuthorization, setLoadingStatus, toggleFavoriteOffer } from './action';
 
 const DEFAULT_MAP_SETTINGS: City = CITIES[0];
 
@@ -71,6 +71,9 @@ export const reducer = createReducer(initialState, (builder) => {
       } else {
         state.favoriteOffers = [updatedOffer];
       }
+    })
+    .addCase(postNewReview, (state, action) => {
+      state.currentOfferReviews = action.payload;
     })
     .addCase(setLoadingStatus, (state, action) => {
       state.isLoading = action.payload;

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { FavoriteButtonTypes } from '../../const';
-// import { useFavorite } from '../../hooks/use-favorite/use-favorite';
 import { Offer } from '../../types/types';
 import { ratingRate } from '../../utils';
 import { FavoriteButton } from '../favorite-button/favorite-button';
@@ -12,7 +11,6 @@ type FavoriteOfferCardProps = {
 
 export function FavoriteOfferCard({ offer }: FavoriteOfferCardProps): JSX.Element {
   const { id, isPremium, title, rating, price, type, previewImage } = offer;
-  // const isFavorite = useFavorite(offer);
 
   return (
     <article className="favorites__card place-card">

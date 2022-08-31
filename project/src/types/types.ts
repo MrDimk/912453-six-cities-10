@@ -63,3 +63,8 @@ export type Review = {
 };
 
 export type Reviews = Review[] | [];
+
+export type NewComment = {
+  comment: string,
+  rating: number,
+}

@@ -9,7 +9,6 @@ import { ReviewsList } from '../../components/reviews/reviews-list';
 import OffersList from '../../components/rooms-list/offers-list';
 import { ContainerTypes, FavoriteButtonTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-// import { useFavorite } from '../../hooks/use-favorite/use-favorite';
 import { fetchNearbyOffers, fetchOfferAction, fetchReviewsAction } from '../../services/api-actions';
 import { Offer, Offers } from '../../types/types';
 import { ratingRate } from '../../utils';

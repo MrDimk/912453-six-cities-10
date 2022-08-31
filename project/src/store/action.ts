@@ -13,6 +13,8 @@ export const loadNearbyOffers = createAction<Offers>('data/loadNearbyOffers');
 export const loadFavoriteOffers = createAction<Offers>('data/favoriteOffers');
 export const toggleFavoriteOffer = createAction<Offer>('data/toggleFavoriteOffer');
 
+export const postNewReview = createAction<Reviews>('data/postNewReview');
+
 export const setLoadingStatus = createAction<boolean>('data/setLoadingStatus');
 
 export const requireAuthorization = createAction<AccessType>('user/requireAuthorization');

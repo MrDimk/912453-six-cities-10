@@ -11,14 +11,10 @@ const URL_MARKER_ACTIVE = '../img/pin-active.svg';
 
 const defaultIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  // iconSize: [40, 40],
-  // iconAnchor: [20, 40]
 });
 
 const activeIcon = new Icon({
   iconUrl: URL_MARKER_ACTIVE,
-  // iconSize: [40, 40],
-  // iconAnchor: [20, 40]
 });
 
 type MapProps = {

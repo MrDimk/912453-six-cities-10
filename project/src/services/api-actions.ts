@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { AccessType, APIRoute } from '../const';
-import { changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setLoadingStatus, toggleFavoriteOffer } from '../store/action';
+import { changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, postNewReview, requireAuthorization, setLoadingStatus, toggleFavoriteOffer } from '../store/action';
 import { AppDispatch, State } from '../store/state';
-import { AuthData, Offer, Offers, Reviews, UserData } from '../types/types';
+import { AuthData, NewComment, Offer, Offers, Reviews, UserData } from '../types/types';
 import { dropToken, saveToken } from './token';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -49,6 +49,29 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, string, {
     return data;
   },
 );
+
+export const postNewReviewAction = createAsyncThunk<
+  void,
+  {
+    id: number,
+    newComment: NewComment,
+  },
+  {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance
+  }>(
+    'data/postNewReview',
+    async ({ id, newComment }, { dispatch, extra: api }) => {
+      try {
+        const { data } = await api.post<Reviews>(`${APIRoute.Comments}/${id}`, newComment);
+
+        dispatch(postNewReview(data));
+      } catch (error) {
+        throw new Error('Can\'t upload new comment!');
+      }
+    },
+  );
 
 export const fetchNearbyOffers = createAsyncThunk<void, string, {
   dispatch: AppDispatch,

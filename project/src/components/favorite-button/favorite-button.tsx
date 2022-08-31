@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AccessType, FavoriteButtonTypes, Paths } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -13,11 +13,13 @@ export function FavoriteButton({ offerId, type }: FavoriteButtonProps): JSX.Elem
   const dispatch = useAppDispatch();
   const { authorizationStatus, favoriteOffers } = useAppSelector((state) => state);
   const navigate = useNavigate();
+  const [isFavorite, setFavoriteStatus] = useState(false);
 
-  let isFavorite = false;
-  if (favoriteOffers && favoriteOffers.length > 0) {
-    isFavorite = favoriteOffers.some((favoriteOffer) => favoriteOffer.id === offerId);
-  }
+  useEffect(() => {
+    if (favoriteOffers && favoriteOffers.length > 0) {
+      setFavoriteStatus(favoriteOffers.some((favoriteOffer) => favoriteOffer.id === offerId));
+    }
+  }, [favoriteOffers, offerId]);
 
   const className = isFavorite ? `${type.className}-button button ${type.className}-button--active`
     : `${type.className}-button button`;

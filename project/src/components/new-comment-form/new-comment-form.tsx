@@ -1,23 +1,49 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Ratings } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { postNewReviewAction } from '../../services/api-actions';
 
 type NewCommentFormProps = {
   offerId: string,
 };
 
+const MIN_COMMENT_LENGTH = 50;
+
 export function NewCommentForm({ offerId }: NewCommentFormProps): JSX.Element {
+  const formRef = useRef(null);
+  const dispatch = useAppDispatch();
   const [currentFormData, setFormData] = useState({
     rating: Ratings.Default,
-    review: ''
+    comment: '',
   });
+  const [isDisabled, setDisabledStatus] = useState(false);
+
 
   const fieldsChangeHandler = (evt: ChangeEvent<HTMLFormElement>) => {
     const { name, value } = evt.target;
+    if (currentFormData.comment.length >= MIN_COMMENT_LENGTH && currentFormData.rating > 0) {
+      setDisabledStatus(true);
+    } else if (name === 'review' && value.length < MIN_COMMENT_LENGTH) {
+      setDisabledStatus(false);
+    }
     setFormData({ ...currentFormData, [name]: value });
   };
 
+  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+    dispatch(postNewReviewAction({ id: Number(offerId), newComment: currentFormData }));
+    setFormData({ rating: 0, comment: '' });
+  };
+
   return (
-    <form className="reviews__form form" action="POST" method="post" onChange={fieldsChangeHandler}>
+    <form
+      ref={formRef}
+      className="reviews__form form"
+      action="POST"
+      method="post"
+      onChange={fieldsChangeHandler}
+      onSubmit={formSubmitHandler}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input defaultChecked={currentFormData.rating === Ratings.fiveStars} className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
@@ -54,12 +80,12 @@ export function NewCommentForm({ offerId }: NewCommentFormProps): JSX.Element {
           </svg>
         </label>
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea className="reviews__textarea form__textarea" id="review" name="comment" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={!isDisabled}>Submit</button>
       </div>
     </form>
   );

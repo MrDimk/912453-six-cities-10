@@ -1,7 +1,6 @@
 import { MouseEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ContainerType, FavoriteButtonTypes, Paths } from '../../const';
-// import { useFavorite } from '../../hooks/use-favorite/use-favorite';
 import { Offer } from '../../types/types';
 import { ratingRate } from '../../utils';
 import { FavoriteButton } from '../favorite-button/favorite-button';
@@ -15,7 +14,6 @@ type OfferCardProps = {
 
 function OfferCard({ offer, container, hoverHandler }: OfferCardProps): JSX.Element {
   const { id, price, isPremium, previewImage, title, type, rating } = offer;
-  // const isFavorite = useFavorite(offer);
   const ratingStars = ratingRate(rating);
   const navigate = useNavigate();
 
