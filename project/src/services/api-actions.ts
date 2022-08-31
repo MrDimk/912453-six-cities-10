@@ -61,7 +61,6 @@ export const fetchNearbyOffers = createAsyncThunk<void, string, {
     const { data } = await api.get<Offers>(`${APIRoute.Offers}/${offerId}/nearby`);
     dispatch(loadNearbyOffers(data));
     dispatch(setLoadingStatus(false));
-    // return data;
   },
 );
 
@@ -92,11 +91,9 @@ export const toggleFavoriteStatusAction = createAsyncThunk<
   async ({ offerId, newState }, { dispatch, extra: api }) => {
     try {
       const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${newState}`);
-      console.log(data);
       dispatch(toggleFavoriteOffer(data));
     } catch (error) {
       throw new Error(`Can't toggle favorite status if offer (id=${offerId})`);
-      // console.log(error);
     }
   },
 );
