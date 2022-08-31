@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AccessType, CITIES, City } from '../const';
 import { Offer, Offers, Reviews } from '../types/types';
-import { changeCity, changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setLoadingStatus } from './action';
+import { changeCity, changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setLoadingStatus, toggleFavoriteOffer } from './action';
 
 const DEFAULT_MAP_SETTINGS: City = CITIES[0];
 
@@ -57,6 +57,20 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload;
+    })
+    .addCase(toggleFavoriteOffer, (state, action) => {
+      const currentFavorites = state.favoriteOffers;
+      const updatedOffer = action.payload;
+      if (currentFavorites && currentFavorites.length > 0) {
+        if (updatedOffer.isFavorite) {
+          state.favoriteOffers = [...currentFavorites.slice(), updatedOffer];
+        } else {
+          const index = currentFavorites.findIndex((offer) => offer.id === updatedOffer.id);
+          state.favoriteOffers = [...currentFavorites.slice(0, index), ...currentFavorites.slice(index + 1)];
+        }
+      } else {
+        state.favoriteOffers = [updatedOffer];
+      }
     })
     .addCase(setLoadingStatus, (state, action) => {
       state.isLoading = action.payload;

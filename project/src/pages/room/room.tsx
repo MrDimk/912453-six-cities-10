@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
+import { FavoriteButton } from '../../components/favorite-button/favorite-button';
 import { ImageGallery } from '../../components/image-gallery/image-gallery';
 import { InsideFeaturesList } from '../../components/inside-features-list/inside-features-list';
 import { OffersMap } from '../../components/map/offers-map';
 import { Mark } from '../../components/mark/mark';
 import { ReviewsList } from '../../components/reviews/reviews-list';
 import OffersList from '../../components/rooms-list/offers-list';
-import { ContainerTypes } from '../../const';
+import { ContainerTypes, FavoriteButtonTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+// import { useFavorite } from '../../hooks/use-favorite/use-favorite';
 import { fetchNearbyOffers, fetchOfferAction, fetchReviewsAction } from '../../services/api-actions';
 import { Offer, Offers } from '../../types/types';
 import { ratingRate } from '../../utils';
@@ -36,7 +38,6 @@ export function Room({ offers }: RoomProps): JSX.Element {
     }
   }, [dispatch, id]);
 
-
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null); // выделенный из числа подобных объявлений
 
   if (isLoading || !offerData || !relevantReviews || !nearbyOffers) {
@@ -48,6 +49,7 @@ export function Room({ offers }: RoomProps): JSX.Element {
   }
   const { isPremium, title, rating, type, price, bedrooms, maxAdults, goods } = offerData;
   const ratingStars = ratingRate(rating);
+
 
   return (
     <>
@@ -62,12 +64,7 @@ export function Room({ offers }: RoomProps): JSX.Element {
               <h1 className="property__name">
                 {title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
-                <svg className="property__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <FavoriteButton offerId={Number(id)} type={FavoriteButtonTypes.Room} />
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">

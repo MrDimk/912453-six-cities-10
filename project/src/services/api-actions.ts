@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { AccessType, APIRoute } from '../const';
-import { changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setLoadingStatus } from '../store/action';
+import { changeUserData, loadFavoriteOffers, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setLoadingStatus, toggleFavoriteOffer } from '../store/action';
 import { AppDispatch, State } from '../store/state';
 import { AuthData, Offer, Offers, Reviews, UserData } from '../types/types';
 import { dropToken, saveToken } from './token';
@@ -50,7 +50,7 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, string, {
   },
 );
 
-export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
+export const fetchNearbyOffers = createAsyncThunk<void, string, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -61,7 +61,7 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
     const { data } = await api.get<Offers>(`${APIRoute.Offers}/${offerId}/nearby`);
     dispatch(loadNearbyOffers(data));
     dispatch(setLoadingStatus(false));
-    return data;
+    // return data;
   },
 );
 
@@ -76,6 +76,28 @@ export const fetchFavoriteOffers = createAsyncThunk<void, undefined, {
     const { data } = await api.get<Offers>(APIRoute.Favorite);
     dispatch(loadFavoriteOffers(data));
     dispatch(setLoadingStatus(false));
+  },
+);
+
+export const toggleFavoriteStatusAction = createAsyncThunk<
+  void,
+  { offerId: number, newState: number },
+  {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance
+  }
+>(
+  'data/toggleFavoriteOffer',
+  async ({ offerId, newState }, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${newState}`);
+      console.log(data);
+      dispatch(toggleFavoriteOffer(data));
+    } catch (error) {
+      throw new Error(`Can't toggle favorite status if offer (id=${offerId})`);
+      // console.log(error);
+    }
   },
 );
 

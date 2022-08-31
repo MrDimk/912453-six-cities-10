@@ -10,12 +10,22 @@ import { Login } from '../../pages/login/login';
 import { Room } from '../../pages/room/room';
 import PrivateRoute from '../private-route/private-route';
 import MainLayout from '../main-layout/main-layout';
-import { Paths } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { AccessType, Paths } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Spinner } from '../../pages/main/spinner';
+import { useEffect } from 'react';
+import { fetchFavoriteOffers } from '../../services/api-actions';
 
 export function App(): JSX.Element {
   const { offers, authorizationStatus, isLoading } = useAppSelector((state) => state);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AccessType.authorized) {
+      dispatch(fetchFavoriteOffers());
+    }
+  }, [authorizationStatus, dispatch]);
 
   return (
     <BrowserRouter>
@@ -26,7 +36,7 @@ export function App(): JSX.Element {
           <Route path='offer/:id' element={<Room offers={offers} />} />
           <Route path='favorites' element={
             <PrivateRoute access={authorizationStatus}>
-              <Favorites offers={offers} />
+              <Favorites />
             </PrivateRoute>
           }
           />
