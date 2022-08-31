@@ -1,4 +1,4 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import { AccessType, Paths } from '../../const';
@@ -10,9 +10,11 @@ export function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  if (authorizationStatus === AccessType.authorized) {
-    navigate(Paths.Root);
-  }
+  useEffect(() => {
+    if (authorizationStatus === AccessType.authorized) {
+      navigate(Paths.Root);
+    }
+  }, [authorizationStatus]);
 
   const loginFieldRef = useRef<HTMLInputElement | null>(null);
   const passwordFieldRef = useRef<HTMLInputElement | null>(null);
