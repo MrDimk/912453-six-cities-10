@@ -138,3 +138,16 @@ export const SortTypes: SortType[] = [
     compare: (a, b) => (b.rating - a.rating),
   }
 ];
+
+export const FavoriteButtonTypes = {
+  Card: {
+    className: 'place-card__bookmark',
+    width: 18,
+    heigth: 19,
+  },
+  Room: {
+    className: 'property__bookmark',
+    width: 31,
+    heigth: 33,
+  }
+};

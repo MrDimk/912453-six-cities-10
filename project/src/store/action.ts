@@ -9,7 +9,9 @@ export const loadOffers = createAction<Offers>('data/loadOffers');
 export const loadOffer = createAction<Offer>('data/loadOffer');
 export const loadReviews = createAction<Reviews>('data/loadReviews');
 export const loadNearbyOffers = createAction<Offers>('data/loadNearbyOffers');
+
 export const loadFavoriteOffers = createAction<Offers>('data/favoriteOffers');
+export const toggleFavoriteOffer = createAction<Offer>('data/toggleFavoriteOffer');
 
 export const setLoadingStatus = createAction<boolean>('data/setLoadingStatus');
 
