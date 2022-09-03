@@ -1,12 +1,17 @@
-import { FormEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
-import { AccessType, Paths } from '../../const';
+import { AccessType, EMAIL_REG_EXP, PASSWORD_REG_EXP, Paths } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../services/api-actions';
 
 export function Login(): JSX.Element {
   const { authorizationStatus } = useAppSelector((state) => state);
+  const [isValid, setSubmitValidStatus] = useState(false);
+  const [currentFormData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -14,18 +19,31 @@ export function Login(): JSX.Element {
     if (authorizationStatus === AccessType.authorized) {
       navigate(Paths.Root);
     }
-  }, [authorizationStatus]);
-
-  const loginFieldRef = useRef<HTMLInputElement | null>(null);
-  const passwordFieldRef = useRef<HTMLInputElement | null>(null);
+  }, [authorizationStatus, navigate]);
 
   const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (loginFieldRef.current && passwordFieldRef.current) {
-      const login = loginFieldRef.current.value;
-      const password = passwordFieldRef.current.value;
+    if (isValid) {
+      const login = currentFormData.email;
+      const password = currentFormData.password;
       dispatch(loginAction({ login, password }));
     }
+  };
+
+  const emailChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target;
+    setFormData({ ...currentFormData, [name]: value });
+    validateSigninForm(value, currentFormData.password);
+  };
+
+  const passwordChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target;
+    setFormData({ ...currentFormData, [name]: value });
+    validateSigninForm(currentFormData.email, value);
+  };
+
+  const validateSigninForm = (email: string, password: string) => {
+    setSubmitValidStatus(EMAIL_REG_EXP.test(email) && PASSWORD_REG_EXP.test(password));
   };
 
   return (
@@ -47,13 +65,13 @@ export function Login(): JSX.Element {
             <form className="login__form form" action="#" method="post" onSubmit={formSubmitHandler}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input ref={loginFieldRef} className="login__input form__input" type="email" name="email" placeholder="Email" required />
+                <input className="login__input form__input" type="email" name="email" placeholder="Email" required onChange={emailChangeHandler} />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input ref={passwordFieldRef} className="login__input form__input" type="password" name="password" placeholder="Password" required />
+                <input className="login__input form__input" type="password" name="password" placeholder="Password" required onChange={passwordChangeHandler} />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button className="login__submit form__submit button" type="submit" disabled={!isValid}>Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">

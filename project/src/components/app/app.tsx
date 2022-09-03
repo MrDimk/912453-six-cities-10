@@ -3,7 +3,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import MainPage from '../../pages/main/main';
+import Main from '../../pages/main/main';
 import Message404 from '../404/message-404';
 import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
@@ -12,7 +12,7 @@ import PrivateRoute from '../private-route/private-route';
 import MainLayout from '../main-layout/main-layout';
 import { AccessType, Paths } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Spinner } from '../../pages/main/spinner';
+import { Spinner } from '../spinner/spinner';
 import { useEffect } from 'react';
 import { fetchFavoriteOffers } from '../../services/api-actions';
 
@@ -32,7 +32,7 @@ export function App(): JSX.Element {
       <Routes>
         <Route path={Paths.Root} element={<MainLayout />} >
           {isLoading && <Route index element={<Spinner />} />}
-          {!isLoading && <Route index element={<MainPage offers={offers} />} />}
+          {!isLoading && <Route index element={<Main offers={offers} />} />}
           <Route path='offer/:id' element={<Room offers={offers} />} />
           <Route path='favorites' element={
             <PrivateRoute access={authorizationStatus}>

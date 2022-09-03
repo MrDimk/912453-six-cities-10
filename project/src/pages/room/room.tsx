@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchNearbyOffers, fetchOfferAction, fetchReviewsAction } from '../../services/api-actions';
 import { Offer, Offers } from '../../types/types';
 import { ratingRate } from '../../utils';
-import { Spinner } from '../main/spinner';
+import { Spinner } from '../../components/spinner/spinner';
 
 type RoomProps = {
   offers: Offers,

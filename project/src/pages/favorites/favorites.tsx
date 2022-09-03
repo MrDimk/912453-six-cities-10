@@ -1,6 +1,6 @@
 import { FavoriteLocationItem } from '../../components/favorites-location-item/favorites-location-item';
 import { useAppSelector } from '../../hooks';
-import { Spinner } from '../main/spinner';
+import { Spinner } from '../../components/spinner/spinner';
 
 export function Favorites(): JSX.Element {
 

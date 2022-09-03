@@ -14,7 +14,7 @@ type MainProps = {
 
 const DEFAULT_SORT = SortTypes[0];
 
-function MainPage({ offers }: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
   const relevantOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const offersCount = relevantOffers.length;
@@ -57,4 +57,4 @@ function MainPage({ offers }: MainProps): JSX.Element {
   );
 }
 
-export default MainPage;
+export default Main;

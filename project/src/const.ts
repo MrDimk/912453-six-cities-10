@@ -151,3 +151,6 @@ export const FavoriteButtonTypes = {
     heigth: 33,
   }
 };
+
+export const PASSWORD_REG_EXP = /^.*(?=.{1,})(?=.*[a-zA-Z])(?=.*\d)/;
+export const EMAIL_REG_EXP = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
