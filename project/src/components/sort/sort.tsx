@@ -1,6 +1,6 @@
 import { MouseEvent, MouseEventHandler, useState } from 'react';
 import { SortType, SortTypes } from '../../const';
-import { Nbsp } from '../utils/nbsp';
+import { Nbsp } from '../nbsp/utils';
 
 type SortFormProps = {
   currentSort: SortType,

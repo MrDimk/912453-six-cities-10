@@ -1,8 +1,8 @@
-import { Paths } from '../../const';
+import { Paths } from '../../../const';
 import { NavLink } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { MouseEvent } from 'react';
-import { logoutAction } from '../../services/api-actions';
+import { logoutAction } from '../../../services/api-actions';
 
 export function SignOut(): JSX.Element {
   const { email, avatarURL } = useAppSelector((state) => state.user);

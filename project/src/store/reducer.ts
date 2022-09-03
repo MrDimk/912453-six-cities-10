@@ -7,13 +7,15 @@ const DEFAULT_MAP_SETTINGS: City = CITIES[0];
 
 type AppState = {
   currentCity: City,
+  cities: City[],
+
   offers: Offers,
   currentOffer: Offer | null,
   currentOfferReviews: Reviews | null,
   currentNearbyOffers: Offers | null,
   favoriteOffers: Offers | [] | null,
-  cities: City[],
   isLoading: boolean,
+
   authorizationStatus: AccessType,
   user: {
     email: string | null,

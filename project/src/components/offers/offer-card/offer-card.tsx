@@ -1,10 +1,10 @@
 import { MouseEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ContainerType, FavoriteButtonTypes, Paths } from '../../const';
-import { Offer } from '../../types/types';
-import { ratingRate } from '../../utils';
-import { FavoriteButton } from '../favorite-button/favorite-button';
-import { Mark } from '../mark/mark';
+import { ContainerType, FavoriteButtonTypes, Paths } from '../../../const';
+import { Offer } from '../../../types/types';
+import { ratingRate } from '../../../utils';
+import { FavoriteButton } from '../../favorite-button/favorite-button';
+import { Mark } from '../../mark/mark';
 
 type OfferCardProps = {
   offer: Offer,

@@ -1,5 +1,4 @@
-
-import { Paths } from '../../const';
+import { Paths } from '../../../const';
 import { NavLink } from 'react-router-dom';
 
 export function SignIn(): JSX.Element {

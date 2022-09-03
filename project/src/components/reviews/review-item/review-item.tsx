@@ -1,5 +1,5 @@
-import { Review } from '../../types/types';
-import { ratingRate } from '../../utils';
+import { Review } from '../../../types/types';
+import { ratingRate } from '../../../utils';
 import dayjs from 'dayjs';
 
 type ReviewItemProps = {

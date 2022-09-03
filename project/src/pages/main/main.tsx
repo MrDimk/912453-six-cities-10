@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { CitiesList } from '../../components/app/cities/cities-list';
-import { OffersMap } from '../../components/map/offers-map';
-import OffersList from '../../components/rooms-list/offers-list';
+import { CitiesList } from '../../components/cities-list/cities-list';
+import { OffersMap } from '../../components/offers-map/offers-map';
+import OffersList from '../../components/offers/offers-list/offers-list';
 import { SortForm } from '../../components/sort/sort';
 import { CITIES, City, ContainerTypes, SortTypes } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';

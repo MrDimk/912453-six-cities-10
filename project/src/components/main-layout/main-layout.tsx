@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { AccessType, Paths } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { SignIn } from '../login/sign-in';
-import { SignOut } from '../login/sign-out';
+import { SignIn } from '../login/sign-in/sign-in';
+import { SignOut } from '../login/sign-out/sign-out';
 import Logo from '../logo/logo';
 
 function MainLayout() {

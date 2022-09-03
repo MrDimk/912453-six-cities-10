@@ -1,5 +1,5 @@
-import { ContainerType } from '../../const';
-import { Offer, Offers } from '../../types/types';
+import { ContainerType } from '../../../const';
+import { Offer, Offers } from '../../../types/types';
 import OfferCard from '../offer-card/offer-card';
 
 type OffersListProps = {

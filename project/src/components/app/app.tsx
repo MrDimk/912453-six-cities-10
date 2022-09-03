@@ -4,7 +4,7 @@ import {
   Route,
 } from 'react-router-dom';
 import Main from '../../pages/main/main';
-import Message404 from '../404/message-404';
+import Message404 from '../message-404/message-404';
 import { Favorites } from '../../pages/favorites/favorites';
 import { Login } from '../../pages/login/login';
 import { Room } from '../../pages/room/room';

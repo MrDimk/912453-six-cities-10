@@ -1,14 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { CITIES, Paths } from '../../../const';
+import { CITIES, Paths } from '../../const';
 
 type CitiesListProps = {
   currentCity: string,
   cityClickHandler: (cityName: string) => void
 };
-
-// const clickHandler = (city:City) => {
-
-// }
 
 export function CitiesList({ currentCity, cityClickHandler }: CitiesListProps): JSX.Element {
   const cities = CITIES.map((city) => city.name);

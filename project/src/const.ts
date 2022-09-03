@@ -154,3 +154,9 @@ export const FavoriteButtonTypes = {
 
 export const PASSWORD_REG_EXP = /^.*(?=.{1,})(?=.*[a-zA-Z])(?=.*\d)/;
 export const EMAIL_REG_EXP = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
+
+export enum NameSpace {
+  Data = 'Data',
+  User = 'User',
+  Reviews = 'Reviews',
+}
