@@ -1,6 +1,6 @@
 import { MouseEvent, MouseEventHandler, useState } from 'react';
 import { SortType, SortTypes } from '../../const';
-import { Nbsp } from '../nbsp/utils';
+import { Nbsp } from '../nbsp/nbsp';
 
 type SortFormProps = {
   currentSort: SortType,
@@ -20,7 +20,6 @@ export function SortForm({ currentSort, setSort }: SortFormProps): JSX.Element {
     if (selectedSortType && currentSort.id !== selectedSortType.id) {
       setSort(selectedSortType);
     }
-    // console.log(evt.target);
   };
 
   return (
